@@ -1,0 +1,29 @@
+package org.educon.test;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import com.educon.utils.DBUtils;
+
+public class Program
+{
+	public static void print( ResultSet rs )throws Exception
+	{
+		
+	}
+	public static void main(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection();
+			 Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY); )
+		{
+			String sql = "select book_name, author_name, price from BookTable";
+			try( ResultSet rs = statement.executeQuery(sql))
+			{
+				Program.print(rs);
+			}
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+}

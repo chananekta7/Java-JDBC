@@ -1,0 +1,109 @@
+package org.educon.test;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+
+import com.educon.utils.DBUtils;
+
+public class Program
+{
+	public static void printJdbcInfo( DatabaseMetaData dm )throws Exception
+	{
+		System.out.println("JDBC Version	:	"+dm.getJDBCMajorVersion()+"."+dm.getJDBCMinorVersion());
+	}
+	public static void printProductInfo( DatabaseMetaData dm )throws Exception
+	{
+		System.out.println("Product Name	:	"+dm.getDatabaseProductName());
+		System.out.println("Product Version	:	"+dm.getDatabaseProductVersion());
+	}
+	public static void printDriverInfo( DatabaseMetaData dm )throws Exception
+	{
+		System.out.println("Driver Name	:	"+dm.getDriverName());
+		System.out.println("Driver Version	:	"+dm.getDriverVersion());
+	}
+	public static void printTableInfo( DatabaseMetaData dm )throws Exception
+	{
+		System.out.println("Supported Cols	:	"+dm.getMaxColumnsInTable());
+		System.out.println("Supported Rows	:	"+dm.getMaxRowSize());
+		System.out.println("Supported Types	:	");
+		System.out.println("------------------------------------------------------------------------");
+		try( ResultSet rs = dm.getTables(null, null, "%", null))
+		{
+			while( rs.next())
+			{
+				if( rs.getString(4).equalsIgnoreCase("TABLE"))
+					System.out.println(rs.getString(3));
+			}
+			System.out.println();
+			System.out.println("------------------------------------------------------------------------");
+		}
+		
+	}
+	/*public static void printTableInfo( DatabaseMetaData dm )throws Exception
+	{
+		System.out.println("Supported Cols	:	"+dm.getMaxColumnsInTable());
+		System.out.println("Supported Rows	:	"+dm.getMaxRowSize());
+		System.out.println("Supported Types	:	");
+		System.out.println("------------------------------------------------------------------------");
+		try( ResultSet rs = dm.getTypeInfo())
+		{
+			int count = 0;
+			while( rs.next())
+			{
+				++ count;
+				System.out.printf("%-20s",rs.getString("TYPE_NAME"));
+				if( count == 4 )
+				{
+					System.out.println();
+					count = 0;
+				}
+			}
+			System.out.println();
+			System.out.println("------------------------------------------------------------------------");
+		}
+		
+	}*/
+	public static void printCatlogInfo( DatabaseMetaData dm )throws Exception
+	{
+		System.out.println("User Name	:	"+dm.getUserName());
+		System.out.println("URL		:	"+dm.getURL());
+		try( ResultSet rs = dm.getCatalogs())
+		{
+			System.out.println("Catlog Name	:	");
+			while( rs.next())
+			{
+				String catlogName = rs.getString("TABLE_CAT");
+				System.out.println("		=>	"+catlogName);
+			}
+		}
+	}
+	
+	public static void main(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection(); )
+		{
+			DatabaseMetaData dm = connection.getMetaData();
+			
+			Program.printJdbcInfo(dm);
+			
+			Program.printProductInfo(dm);
+			
+			Program.printDriverInfo(dm);
+			
+			Program.printTableInfo(dm);
+			
+			Program.printCatlogInfo(dm);
+			
+			
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+}

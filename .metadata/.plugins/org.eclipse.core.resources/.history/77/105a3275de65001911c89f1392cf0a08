@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------------------------------
+delimiter //
+create procedure sp_fund_tranfer
+	( 	IN srcAccountNumber int,
+		IN destAccountNumber int,
+		IN amount float,
+		OUT srcBalance float,
+		OUT destBalance float)
+ BEGIN
+ 	 update AccountTable set balance = balance - amount where acc_number=srcAccountNumber;
+ 	 update AccountTable set balance = balance + amount where acc_number=destAccountNumber;
+ 	 select balance into srcBalance from AccountTable where acc_number=srcAccountNumber;
+ 	 select balance into destBalance from AccountTable where acc_number=destAccountNumber;
+END//
+
+---------------------------------------------------------------------------------------------------

@@ -1,0 +1,10 @@
+---------------------------------------------------------------------------------------------------
+//Stored Procedure to update single employee : sp_update_employee
+
+delimiter //
+create procedure sp_update_employee( IN pSalary float, IN pEmpid int )
+BEGIN
+	update EmployeeTable set salary=pSalary where emp_id=pEmpid;
+END //
+delimiter ;
+---------------------------------------------------------------------------------------------------

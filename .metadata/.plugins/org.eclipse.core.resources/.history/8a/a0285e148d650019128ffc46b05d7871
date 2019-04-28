@@ -1,0 +1,22 @@
+package com.educon.test;
+public class Program
+{
+	public static void main(String[] args) 
+	{
+		int choice;
+		while( ( choice = EmployeeTest.menuList( ) ) != 0 )
+		{
+			switch( choice )
+			{
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			}
+		}
+	}
+}

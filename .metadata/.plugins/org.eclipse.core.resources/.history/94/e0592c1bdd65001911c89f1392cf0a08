@@ -1,0 +1,33 @@
+package org.educon.test;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import com.educon.utils.DBUtils;
+
+public class Program
+{
+	public static void main2(String[] args) 
+	{
+		String sql= "{call sp_update_employee(?,?)}";
+		
+		try( Connection connection = DBUtils.getConnection();
+			 CallableStatement statement = connection.prepareCall(sql);)
+		{
+			statement.setFloat(1, 48000);
+			
+			statement.setInt(2, 36);
+			
+			boolean status = statement.execute();
+			//true if the first result is a ResultSet object;
+			//false if it is an update count or there are no results
+			
+			System.out.println(status+"	"+statement.getUpdateCount());
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+}

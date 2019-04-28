@@ -1,0 +1,27 @@
+package org.educon.test;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
+
+import com.educon.utils.DBUtils;
+
+public class Program
+{
+	public static void main(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection(); )
+		{
+			DatabaseMetaData dm = connection.getMetaData();
+			System.out.println("Product Name	:	"+dm.getDatabaseProductName());
+			System.out.println("Product Version	:	"+dm.getDatabaseProductVersion());
+			System.out.println("Product Name	:	"+dm.getDriverName());
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+}

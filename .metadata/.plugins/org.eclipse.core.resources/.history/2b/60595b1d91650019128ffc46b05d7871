@@ -1,0 +1,69 @@
+package com.educon.test;
+
+import java.sql.Date;
+import java.util.Scanner;
+
+import com.educon.dao.EmployeeDao;
+import com.educon.pojo.Employee;
+
+public class EmployeeTest 
+{
+	private static Scanner sc = new Scanner(System.in);
+	EmployeeDao  dao;
+	public EmployeeTest()throws Exception
+	{
+		this.dao = new EmployeeDao();
+	}
+	public static void acceptRecord( Employee emp )
+	{
+		System.out.print("Employee Id	:	");
+		emp.setEmpid(sc.nextInt());
+		System.out.print("Full Name	:	");
+		sc.nextLine();
+		emp.setFullName(sc.nextLine());
+		System.out.print("Permanent Address	:	");
+		emp.setPermanentAddress(sc.nextLine());
+		System.out.print("Join Date[yyyy-mm-dd]	:	");
+		emp.setJoinDate( Date.valueOf(sc.nextLine()));
+		System.out.print("Salary	:	");
+		emp.setSalary(sc.nextFloat());
+	}
+	public void addEmployee( )throws Exception
+	{
+		Employee emp = new Employee();
+		int updateCount = this.dao.insert(emp);
+		if( updateCount > 0 )
+			System.out.println("Record inserted successfully.");
+	}
+	public void updateEmployee( )throws Exception
+	{
+		System.out.print("Employee Id	:	");
+		int empid = sc.nextInt();
+		System.out.print("Salary	:	");
+		float salary = sc.nextFloat();
+		int updateCount = this.dao.update(empid, salary);
+		if( updateCount > 0 )
+			System.out.println("Record updated successfully.");
+
+	}
+	public void removeEmployee( )throws Exception
+	{
+		System.out.print("Employee Id	:	");
+		int empid = sc.nextInt();
+		int updateCount = this.dao.delete(empid);
+		if( updateCount > 0 )
+			System.out.println("Record deleted successfully.");
+
+	}
+
+	public static int menuList( )
+	{
+		System.out.println("0.Exit");
+		System.out.println("1.Add Employee");
+		System.out.println("2.Update Employee");
+		System.out.println("3.Remove Employee");
+		System.out.println("4.Print Employee(s)");
+		System.out.print("Enter choice	:	");
+		return sc.nextInt();
+	}
+}

@@ -1,0 +1,32 @@
+package org.educon.test;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import com.educon.utils.DBUtils;
+
+public class Program
+{
+	public static void print( ResultSet rs )throws Exception
+	{
+		String bookName = rs.getString("book_name");
+		String authorName = rs.getString("author_name");
+		float price = rs.getFloat("price");
+		System.out.printf("%-50s%-30s%-10.2f\n",bookName, authorName,price);
+	}
+	public static void main(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection();
+			 Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY); )
+		{
+			String sql = "select full_name, emp_id, salary, join_date from EmployeeTable";
+			try( ResultSet rs = statement.executeQuery(sql))
+			{
+				Program.print(rs);
+			}
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+}

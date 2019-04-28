@@ -1,0 +1,244 @@
+package org.educon.test;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import com.educon.utils.DBUtils;
+
+public class Program
+{
+	public static void print( ResultSet rs )throws Exception
+	{
+		String fullName = rs.getString("full_name");
+		int empid = rs.getInt("emp_id");
+		float salary = rs.getFloat("salary");
+		Date joinDate = rs.getDate("join_date");
+		String permanentAddress = rs.getString("permanent_address");
+		System.out.printf("%-30s%-5d%-10.2f%-15s%-50s\n",fullName, empid, salary, joinDate, permanentAddress);
+	}
+	public static void main1(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection();
+			 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); )
+		{
+			String sql = "select * from EmployeeTable";
+			try( ResultSet rs = statement.executeQuery(sql))
+			{
+				//Print first row
+				if( rs.first())
+					print(rs);
+				
+				//Print last row
+				if( rs.last())
+					print( rs );
+				
+				
+				rs.beforeFirst();
+				//Print first row
+				if( rs.isBeforeFirst())
+				{
+					if( rs.next())
+						print(rs);
+				}
+				
+				rs.afterLast();
+				//Print last row
+				if( rs.isAfterLast())
+				{
+					if( rs.previous())
+						print(rs);
+				}
+			}
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}//end of main
+	public static void main2(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection();
+			 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); )
+		{
+			String sql = "select * from EmployeeTable";
+			try( ResultSet rs = statement.executeQuery(sql))
+			{
+				//Print All the rows from top to Bottom
+				if( rs.isBeforeFirst())
+				{
+					while( rs.next())
+						Program.print(rs);
+				}
+				
+				System.out.println();
+				
+				//Print All the rows from top to Bottom
+				rs.beforeFirst();
+				if( rs.isBeforeFirst())
+				{
+					while( rs.next())
+						Program.print(rs);
+				}
+			}
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+	public static void main3(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection();
+			 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); )
+		{
+			String sql = "select * from EmployeeTable";
+			try( ResultSet rs = statement.executeQuery(sql))
+			{
+				//Print All the rows from Bottom to up
+				rs.afterLast();
+				if( rs.isAfterLast())
+				{
+					while( rs.previous())
+						Program.print(rs);
+				}
+				
+				System.out.println();
+				
+				//Print All the rows from Bottom to up
+				rs.afterLast();
+				if( rs.isAfterLast())
+				{
+					while( rs.previous())
+						Program.print(rs);
+				}
+			}
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+	public static void main4(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection();
+			 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); )
+		{
+			String sql = "select * from EmployeeTable";
+			try( ResultSet rs = statement.executeQuery(sql))
+			{
+				//Print All the rows from top to Bottom
+				if( rs.isBeforeFirst())
+				{
+					while( rs.next())
+						Program.print(rs);
+				}
+				
+				System.out.println();
+				//Print All the rows from Bottom to up
+				if( rs.isAfterLast())
+				{
+					while( rs.previous())
+						Program.print(rs);
+				}
+			}
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+	public static void main5(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection();
+			 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); )
+		{
+			String sql = "select * from EmployeeTable";
+			try( ResultSet rs = statement.executeQuery(sql))
+			{
+				//Print All the rows from top to Bottom
+				if( rs.isBeforeFirst())
+				{
+					while( rs.next())
+						Program.print(rs);
+				}
+				
+				System.out.println();
+				//Print All the rows from Bottom to up
+				if( rs.isAfterLast())
+				{
+					while( rs.previous())
+						Program.print(rs);
+				}
+			}
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+	public static void main6(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection();
+			 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); )
+		{
+			//row - the number of the row to which the cursor should move. 
+			//A value of zero indicates that the cursor will be positioned before the first row;
+			//a positive number indicates the row number counting from the beginning of the result set;
+			//a negative number indicates the row number counting from the end of the result set
+			
+			String sql = "select * from EmployeeTable";
+			try( ResultSet rs = statement.executeQuery(sql))
+			{
+				if( rs.absolute(1))
+					Program.print(rs);
+				if( rs.absolute(5))
+					Program.print(rs);
+				System.out.println("--------------------------------------------------------------------------------");
+				if( rs.absolute(-1))
+					Program.print(rs);
+				if( rs.absolute(-5))
+					Program.print(rs);
+				System.out.println("--------------------------------------------------------------------------------");
+				//Note: Calling absolute(1) is the same as calling first().
+				//Note: Calling absolute(-1) is the same as calling last().
+			}
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+	public static void main(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection();
+			 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); )
+		{
+			//row - the number of the row to which the cursor should move. 
+			//A value of zero indicates that the cursor will be positioned before the first row;
+			//a positive number indicates the row number counting from the beginning of the result set;
+			//a negative number indicates the row number counting from the end of the result set
+			
+			String sql = "select * from EmployeeTable";
+			try( ResultSet rs = statement.executeQuery(sql))
+			{
+				///Note: Calling the method relative(1) is identical to calling the method next() and 
+				//Note: Calling the method relative(-1) is identical to calling the method previous()
+				
+				rs.next();
+				rs.next();
+				if( rs.relative(0)) //Second Record : Calling relative(0) is valid, but does not change the cursor position.
+					Program.print(rs);
+				
+				if( rs.relative(2))
+					Program.print(rs);
+				
+				if( rs.relative(-1))
+					Program.print(rs);
+			}
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+}

@@ -1,0 +1,5 @@
+package com.educon.dao;
+
+public class EmployeeDao {
+
+}

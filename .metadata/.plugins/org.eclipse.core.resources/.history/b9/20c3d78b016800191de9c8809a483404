@@ -1,0 +1,25 @@
+package org.educon.test;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Types;
+
+import com.educon.utils.DBUtils;
+
+public class Program
+{
+	public static void main(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection();
+			 Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY); )
+		{
+			String sql = " select * from ";
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+}

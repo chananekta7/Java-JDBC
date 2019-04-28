@@ -1,0 +1,51 @@
+package com.educon.dao;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Statement;
+
+import com.educon.pojo.Employee;
+import com.educon.utils.DBUtils;
+
+public class EmployeeDao implements Closeable
+{
+	private Statement statement;
+	public EmployeeDao( )throws Exception  
+	{
+		Connection connection = DBUtils.getConnection();
+		this.statement = connection.createStatement();
+	}
+	public int insert( Employee emp )throws Exception
+	{
+		String sql = "insert into EmployeeTable values("+emp.getEmpid()+",'"+emp.getFullName()+"','"+emp.getPermanentAddress()+"','"+emp.getJoinDate()+"',"+emp.getSalary()+")";
+		int updateCount = this.statement.getUpdateCount();
+		return updateCount;
+	}
+	public int update( Employee emp )throws Exception
+	{
+		String sql = "update EmployeeTable set salary="+salary+" where emp_id="+empid+"";
+		int updateCount = this.statement.getUpdateCount();
+		return updateCount;
+	}
+	public int delete( Employee emp )throws Exception
+	{
+		String sql = "delete from EmployeeTable where emp_id="+empid+"";
+		int updateCount = this.statement.getUpdateCount();
+		return updateCount;
+	}
+	
+	@Override
+	public void close() throws IOException 
+	{
+		try 
+		{
+			this.statement.close();
+			DBUtils.closeConnection();
+		} 
+		catch (Exception cause) 
+		{
+			throw new IOException(cause);
+		}
+	}
+}

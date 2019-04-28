@@ -1,0 +1,36 @@
+package com.educon.test;
+
+import java.util.Scanner;
+
+import com.educon.dao.EmployeeDao;
+import com.educon.pojo.Employee;
+
+public class EmployeeTest 
+{
+	private static Scanner sc = new Scanner(System.in);
+	EmployeeDao  dao;
+	public EmployeeTest()throws Exception
+	{
+		this.dao = new EmployeeDao();
+	}
+	public static void acceptRecord( Employee emp )
+	{
+		System.out.print("Employee Id	:	");
+		emp.setEmpid(sc.nextInt());
+		System.out.print("Full Name	:	");
+		sc.nextLine();
+		emp.setFullName(sc.nextLine());
+		System.out.print("Permanent Address	:	");
+	}
+	public void add
+	public static int menuList( )
+	{
+		System.out.println("0.Exit");
+		System.out.println("1.Add Employee");
+		System.out.println("2.Update Employee");
+		System.out.println("3.Remove Employee");
+		System.out.println("4.Print Employee(s)");
+		System.out.print("Enter choice	:	");
+		return sc.nextInt();
+	}
+}

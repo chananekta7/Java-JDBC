@@ -1,0 +1,121 @@
+package org.educon.test;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
+
+import com.educon.utils.DBUtils;
+
+public class Program
+{
+	static Scanner sc = new  Scanner(System.in);
+	public static void insertRecord( ResultSet rs )throws Exception
+	{
+		System.out.print("Enter Empid	:	");
+		int empid = sc.nextInt();
+		
+		System.out.print("Enter Full Name	:	");
+		sc.nextLine();
+		String fullName = sc.nextLine();
+		
+		System.out.print("Enter Join Date	:	");
+		Date joinDate = Date.valueOf(sc.nextLine());
+		
+		System.out.print("Enter Salary	:	");
+		float salary = sc.nextFloat();
+		
+		while( rs.next( ) );
+		rs.moveToInsertRow();
+		rs.updateInt("emp_id", empid);
+		rs.updateString("full_name", fullName);
+		rs.updateDate("join_date", joinDate);
+		rs.updateFloat("salary", salary);
+		rs.insertRow();
+	}
+	public static void updateRecord( ResultSet rs )throws Exception
+	{
+		System.out.print("Enter Empid	:	");
+		int empid = sc.nextInt();
+		System.out.print("Enter Salary	:	");
+		float salary = sc.nextFloat();
+		while( rs.next( ) )
+		{
+			if( rs.getInt("emp_id") == empid )
+			{
+				rs.updateFloat("salary", salary);
+				rs.updateRow();
+				break;
+			}
+		}
+	}
+	public static void deleteRecord( ResultSet rs )throws Exception
+	{
+		System.out.print("Enter empid	:	");
+		int empid = sc.nextInt();
+		
+		while( rs.next( ) )
+		{
+			if( rs.getInt("emp_id") == empid )
+			{
+				rs.deleteRow();
+				break;
+			}
+		}
+	}
+	public static void print( ResultSet rs )throws Exception
+	{
+		String fullName = rs.getString("full_name");
+		int empid = rs.getInt("emp_id");
+		float salary = rs.getFloat("salary");
+		Date joinDate = rs.getDate("join_date");
+		String permanentAddress = rs.getString("permanent_address");
+		System.out.printf("%-30s%-5d%-10.2f%-15s%-50s\n",fullName, empid, salary, joinDate, permanentAddress);
+	}
+	public static void printRecord( ResultSet rs )throws Exception
+	{
+		while( rs.next())
+			Program.print(rs);
+	}
+	static int menuList( )
+	{
+		System.out.println("0.Exit");
+		System.out.println("1.Insert Record");
+		System.out.println("2.Update Record");
+		System.out.println("3.Delete Record");
+		System.out.println("4.Print Record");
+		System.out.print("Enter choice	:	");
+		return sc.nextInt();
+	}
+	public static void main(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection();
+			 Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); )
+		{
+			int choice;
+			String sql = "select * from EmployeeTable";
+			try( ResultSet rs = statement.executeQuery(sql))
+			{
+				
+				while( ( choice = Program.menuList( ) ) != 0 )
+				{
+					switch( choice )
+					{
+					case 1:
+						break;
+					case 2:
+						break;
+					case 3:
+						break;
+					case 4:
+						break;
+					}
+				}
+			}
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}//end of main
+}

@@ -1,0 +1,54 @@
+package org.educon.test;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+
+import com.educon.utils.DBUtils;
+
+public class Program
+{
+	public static void printProductInfo( DatabaseMetaData dm )throws Exception
+	{
+		System.out.println("Product Name	:	"+dm.getDatabaseProductName());
+		System.out.println("Product Version	:	"+dm.getDatabaseProductVersion());
+	}
+	public static void printDriverInfo( DatabaseMetaData dm )throws Exception
+	{
+		System.out.println("Driver Name	:	"+dm.getDriverName());
+		System.out.println("Driver Version	:	"+dm.getDriverVersion());
+	}
+	public static void printCatlogInfo( DatabaseMetaData dm )throws Exception
+	{
+		try( ResultSet rs = dm.getCatalogs())
+		{
+			System.out.println("Catlog Name	:	");
+			while( rs.next())
+			{
+				String catlogName = rs.getString("TABLE_CAT");
+				System.out.println("		=>	"+catlogName);
+			}
+		}
+	}
+	public static void main(String[] args) 
+	{	
+		try( Connection connection = DBUtils.getConnection(); )
+		{
+			DatabaseMetaData dm = connection.getMetaData();
+			
+			Program.printProductInfo(dm);
+			
+			Program.printDriverInfo(dm);
+			
+			Program.printCatlogInfo(dm);
+		}
+		catch( Exception ex )
+		{
+			ex.printStackTrace();
+		}
+	}
+}

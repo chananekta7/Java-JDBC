@@ -1,0 +1,12 @@
+package com.educon.test;
+
+import java.util.Scanner;
+
+public class EmployeeTest 
+{
+	private static Scanner sc = new Scanner(System.in);
+	public EmployeeTest() 
+	{
+		
+	}
+}

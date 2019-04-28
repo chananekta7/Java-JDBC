@@ -1,0 +1,22 @@
+package com.educon.test;
+
+import java.util.Scanner;
+
+public class EmployeeTest 
+{
+	private static Scanner sc = new Scanner(System.in);
+	public EmployeeTest() 
+	{
+		
+	}
+	public static int menuList( )
+	{
+		System.out.println("0.Exit");
+		System.out.println("1.Add Employee");
+		System.out.println("2.Update Employee");
+		System.out.println("3.Remove Employee");
+		System.out.println("4.Print Employee(s)");
+		System.out.print("Enter choice	:	");
+		return sc.nextInt();
+	}
+}

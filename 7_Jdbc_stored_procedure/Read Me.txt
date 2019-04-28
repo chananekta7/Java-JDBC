@@ -1,0 +1,40 @@
+//Stored Procedure to insert single employee : sp_insert_employee
+
+delimiter //
+create procedure sp_insert_employee( IN pEmpid int,
+									 IN pFullName varchar(256), 
+								 	 IN pPermanentAddress varchar(256),
+								  	 IN pJoinDate date, 
+								 	 IN pSalary float )
+BEGIN
+	insert into EmployeeTable values( pEmpid, pFullName, pPermanentAddress, pJoinDate, pSalary );
+END //
+delimiter ;
+---------------------------------------------------------------------------------------------------
+//Stored Procedure to update single employee : sp_update_employee
+
+delimiter //
+create procedure sp_update_employee( IN pSalary float, IN pEmpid int )
+BEGIN
+	update EmployeeTable set salary=pSalary where emp_id=pEmpid;
+END //
+delimiter ;
+---------------------------------------------------------------------------------------------------
+//Stored Procedure to delete single employee : sp_delete_employee
+
+delimiter //
+create procedure sp_delete_employee( IN pEmpid int )
+BEGIN
+	delete from EmployeeTable where emp_id=pEmpid;
+END //
+delimiter ;
+---------------------------------------------------------------------------------------------------
+//Stored Procedure to get all the employees : sp_get_employees
+
+delimiter //
+create procedure sp_get_employees(  )
+BEGIN
+	select * from EmployeeTable;
+END //
+delimiter ;
+---------------------------------------------------------------------------------------------------

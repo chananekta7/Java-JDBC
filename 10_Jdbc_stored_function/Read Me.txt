@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------------------------------
+delimiter	//
+create function fn_fund_transfer( srcAccountNumber int, destAccountNumber int, amount float)returns float deterministic
+begin
+		 declare srcBalance float;
+		 update AccountTable set balance=balance-amount where acc_number=srcAccountNumber;
+		 update AccountTable set balance=balance+amount where acc_number=destAccountNumber;
+		 select balance into srcBalance from AccountTable where acc_number=srcAccountNumber; 
+		 return srcBalance;
+end //
+
+delimiter	;
+---------------------------------------------------------------------------------------------------

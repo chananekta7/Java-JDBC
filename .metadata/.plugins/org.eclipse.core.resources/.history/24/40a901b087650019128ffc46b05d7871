@@ -1,0 +1,31 @@
+package com.educon.dao;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Statement;
+
+import com.educon.utils.DBUtils;
+
+public class EmployeeDao implements Closeable
+{
+	private Statement statement;
+	public EmployeeDao( )throws Exception  
+	{
+		Connection connection = DBUtils.getConnection();
+		this.statement = connection.createStatement();
+	}
+	@Override
+	public void close() throws IOException 
+	{
+		try 
+		{
+			this.statement.close();
+			DBUtils.closeConnection();
+		} 
+		catch (Exception cause) 
+		{
+			throw new IOException(cause);
+		}
+	}
+}
